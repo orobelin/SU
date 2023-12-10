@@ -1,0 +1,9 @@
+Annual_MB : Folder which contain the detailed annual mass balance available in BolinC database
+- Year 1960 and 1963 are not available
+- Data are not always consistent (positive balance at the bottom of the glacier, ELA which is not match with the mass balance data, same winter and summer mass balance)
+
+storglaciaren_mass_balance_series.csv : Resume of the yearly mass balance
+
+mass_balance_overview.csv : Data from WGMS with an overview of the yearly informations (such as ELA).
+- ELA is not available for 2004 and 2005. Values from Annual_MB/2004MBtable.dat and Annual_MB/2005MBtable.dat were added and are consistent with the data.
+
