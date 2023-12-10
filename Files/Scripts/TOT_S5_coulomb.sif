@@ -1,0 +1,363 @@
+
+!---LUA BEGIN
+! assert(loadfile('../COLD.lua'))()
+! assert(loadfile('../TOT.lua'))()
+!---LUA END
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+$name="TOTd_S5_coulomb"
+!--------------------------------------------------------
+Header
+  Mesh DB "." "../mesh2D_TOTd"
+End
+
+!--------------------------------------------------------
+Constants
+  Buoyancy Use Basal Melt = Logical False
+  sea level = Real #zsl
+  Bottom Surface Name = String bedrock
+  Water Density = Real #rhoo
+  Gas Constant = Real 8.314
+  Sea Spring Timestep Size = Real 0.1
+End
+
+!--------------------------------------------------------
+Simulation
+  Coordinate System  = Cartesian 3D
+  Simulation Type = Steady State
+
+  Extruded Mesh Levels = #MLEV
+  Extruded Mesh Density = Variable Coordinate 1
+    Real MATC "1.0 + 2.5 * tx[0]"
+
+  Steady State Min Iterations = 1!#IMIN
+  Steady State Max Iterations = 2!#IMAX
+
+  Output File = "$name$_.result"
+  Output Intervals = 1         
+  Restart File = "../../TOT_S4c/mesh2D_TOTd/TOTd_S4_L3_L4_c_.result"             
+  Restart Position = 0
+
+  Restart Before Initial Conditions = Logical True
+  Initialize Dirichlet Conditions = Logical False
+
+  max output level = 8
+End
+
+!--------------------------------------------------------
+! Main ice body
+Body 1
+  Equation = 1
+  Body Force = 1
+  Material = 1
+  Initial Condition = 1
+End
+! lower surface
+Body 2
+  Equation = 2
+  Body Force = 1
+  Material = 1
+  Initial Condition = 1
+End
+! upper surface
+Body 3
+  Equation = 3
+  Body Force = 1
+  Material = 1
+  Initial Condition = 1
+End
+
+
+!--------------------------------------------------------
+Initial Condition 1
+  slc = Variable alpha
+    Real procedure "ElmerIceUSF" "TenPowerA"
+
+  Effective Pressure = Variable GroundedMask,depth
+    Real lua "effective_pressure2(tx[0],tx[1])"
+
+  End
+
+
+!--------------------------------------------------------
+Body Force 1
+  Flow BodyForce 1 = Real 0.0
+  Flow BodyForce 2 = Real 0.0
+  Flow BodyForce 3 = Real #gravity
+
+End
+
+
+
+!--------------------------------------------------------
+Material 1
+  sea level = Real #zsl
+  Density = Real #rhoi
+
+  Viscosity Model = String "power law"
+  Viscosity Exponent = Real #m
+
+! Viscosity defined as mu*EF^2 to ensure >0 and to 
+! use mu as initial guess (here EF is an enhancement factor)
+  Viscosity = Variable bottom EF, mu
+    Real procedure "ElmerIceUSF" "Asquare_Scaled"
+
+  Critical Shear Rate = Real 1.0e-10
+        
+  Cauchy = Logical True
+
+
+
+End
+
+!--------------------------------------------------------
+
+Solver 1
+  Exec Solver = Before simulation
+  Equation = "MapCoordinate"
+  Procedure = "StructuredMeshMapper" "StructuredMeshMapper"
+  Active Coordinate = Integer 3
+
+  Top Surface Variable Name = String "FS upper"
+  Bottom Surface Variable Name = String "FS lower"
+
+  Dot Product Tolerance = Real 0.001
+  Displacement Mode = Logical False
+  Correct Surface = Logical True
+  Minimum Height = Real #MINH
+End
+Solver 2
+  Exec Solver = Before simulation
+  Equation = "Normal Vector"
+  Procedure = "ElmerIceSolvers" "ComputeNormalSolver"
+  Variable = "Normal Vector"
+  Variable DOFs = 3
+  ComputeAll = Logical True
+  Optimize Bandwidth = Logical False
+End
+
+Solver 3
+  Equation = String "StressSolver"
+  Procedure =  File "ElmerIceSolvers" "ComputeDevStress"
+  ! this is just a dummy, hence no output is needed
+  !-----------------------------------------------------------------------
+  Variable = -nooutput "Sij"
+  Variable DOFs = 1
+  ! the name of the variable containing the flow solution (U,V,W,Pressure)
+  !-----------------------------------------------------------------------
+  Flow Solver Name = String "Flow Solution"
+  ! no default value anymore for "Stress Variable Name"
+  Stress Variable Name = String "Stress"
+  !-----------------------------------------------------------------------
+  Exported Variable 1 = "Stress" ! [Sxx, Syy, Szz, Sxy] in 2D
+                                 ! [Sxx, Syy, Szz, Sxy, Syz, Szx] in 3D
+  Exported Variable 1 DOFs = 6   ! 4 in 2D, 6 in 3D
+
+!  Linear System Solver = "Direct"
+!  Linear System Direct Method =cPardiso
+  Linear System Solver = "Iterative"
+
+  Linear System Iterative Method = "BiCGStab"
+!  Linear System Iterative Method = "BiCGStabl"
+  Bicgstabl Polynomial Degree = 4
+  Linear System Max Iterations = 300
+  Linear System Convergence Tolerance = 1.0E-07
+  Linear System Abort Not Converged = True
+  Linear System Preconditioning = "ILU1"
+  Linear System Residual Output = 1
+End
+Solver 4
+!  Exec Solver = Before simulation
+  Equation = "Weert2Coul"
+  Procedure = "Weertman2Coulomb" "Weertman2CoulombSolver"
+  Variable = "CoulombSliding"
+  Variable DOFs = 1
+
+  Threshold Sliding Coefficient = Real 1.0e-5
+  Default C = Real 1.0
+  Min C = Real 0.1
+  Minimum As = Real 100.0
+  Default As = Real 1.0E05
+  Coulomb As Output Variable = String "Coulomb As"
+  Coulomb C Output Variable = String "Coulomb C"
+  Weertman Coefficient Input Variable = String "slc"
+  
+  Conversion mode = String "Smooth"
+
+  Exported Variable 1 = "Coulomb As"
+  Exported Variable 1 DOFS = Integer 1
+  Exported Variable 2 = "Coulomb C"
+  Exported Variable 2 DOFS = Integer 1
+  Exported Variable 3 = "slc"
+  Exported Variable 3 DOFS = Integer 1
+  Exported Variable 4 = "Effective Pressure"
+  Exported Variable 4 DOFS = Integer 1
+  Exported Variable 5 = "outputtaub"
+  Exported Variable 5 DOFS = Integer 1
+
+End
+!!!! Navier-Stokes Solution
+Solver 5
+Exec solver = never
+  Equation = "Navier-Stokes"  
+  Stabilization Method = String Stabilized
+  Flow Model = Stokes
+
+  Optimize Bandwidth = True
+
+  !mandatory to save bulk stiffness matrix
+  Calculate Loads = Logical True
+
+  Linear System Solver = Direct
+  Linear System Direct Method =  cPardiso
+!  Linear System Direct Method = mumps
+!  Mumps percentage increase working space = Integer 60
+
+  Nonlinear System Max Iterations = Integer 50
+  Nonlinear System Convergence Tolerance  = Real 1.0e-7
+  Nonlinear System Newton After Iterations = 50
+  Nonlinear System Newton After Tolerance = 1.0e-5
+  Nonlinear System Reset Newton = Logical True
+!  Nonlinear System Relaxation Factor = 0.5
+
+  Steady State Convergence Tolerance = Real 1.0e-10
+
+  ! Timings of the solver
+  Linear System Timing = Logical True
+  Linear System Timing Cumulative = Logical True
+  Solver Timing = Logical True
+  Solver Timing Cumulative = Logical True
+
+! square root of the slip coef
+  Exported Variable 1 = alpha
+  Exported Variable 1 DOFS = Integer 1
+! derivative of the cost fn wr to alpha
+  Exported Variable 2 = -nooutput DJDBeta
+  Exported Variable 2 DOFS = Integer 1
+! value of the cost function
+  Exported Variable 3 = -global CostValue
+  Exported Variable 3 DOFS = Integer 1
+! Variable used to force the adjoint system/update in CostSolver
+  Exported Variable 4 = -nooutput Velocityb
+  Exported Variable 4 DOFs = Integer 4
+  Exported Variable 5 = beta
+  Exported Variable 5 DOFs = Integer 1
+End
+
+
+
+
+
+
+Solver 6
+!  Exec Solver = String "never"
+  Exec Solver = String "after saving"
+  Equation = String "ResultOutput"
+  Procedure = File "ResultOutputSolve" "ResultOutputSolver"
+  Save Geometry Ids = Logical True
+  Output File Name = File $name
+  Output Format = String "vtu"
+  Output Directory = File #outdir
+  Vtu Format = Logical True
+!  Scalar Field 1  = EmergenceVelocity
+!  Scalar Field 2  = bmb
+!  Scalar Field 3  = Alpha
+!  Scalar Field 4  = Beta
+!  Scalar Field 5  = bed
+!  Scalar Field 6  = Height
+!  Scalar Field 7  = Depth
+!  Scalar Field 8  = FS upper
+!  Scalar Field 9  = FS lower
+!  Scalar Field 10 = vx
+!  Scalar Field 11 = vy
+!  Scalar Field 12 = groundedmask
+!  Scalar Field 13 = smbref
+!  Scalar Field 6  = Temperature Homologous
+!  Vector Field 1  = Velocity 
+End
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Equation 1
+  Active Solvers (5) = 1 2 3 5 6
+  Flow Solution Name = String "Flow Solution"
+  Convection = Computed 
+  NS Convect= False
+End
+
+Equation 2
+  Active Solvers (1) = 4
+  Convection = Computed 
+  Flow Solution Name = String "Flow Solution"
+  Friction Load Mask = String "GroundedMask"
+End 
+
+Equation 3
+  Active Solvers (0) =
+  Convection = Computed 
+  Flow Solution Name = String "Flow Solution"
+End
+!--------------------------------------------------------
+
+Boundary Condition 1
+  Name = "calving_front"
+  Target Boundaries(1)  = 1
+  !Flow Force BC = logical True
+  External Pressure = Variable Coordinate 3
+    Real Procedure "ElmerIceUSF" "SeaPressure"
+  !Compute Sea Pressure = Logical True
+End
+
+Boundary Condition 2
+  Name = "inland_boundary"
+  Target Boundaries(1)  = 2
+
+!  Normal-Tangential Velocity = Logical True
+!  Velocity 1 = Real 0.0e0
+!  Velocity 2 = Real 0.0e0
+!  Velocity 3 = Real 0.0e0
+
+  Normal-Tangential Velocity = Logical True
+  Normal-Tangential Velocity Rotate = Logical False
+  Slip Coefficient 1 = Real 10.0
+  Slip Coefficient 2 = Real 0.0001
+  Slip Coefficient 3 = Real 0.0001
+End
+
+Boundary Condition 3
+  Name = "bed"
+  Body ID = Integer 2
+  Height = Real 0.0
+  Save Line = Logical True
+  Save Scalars = logical true
+
+  Mass Consistent Normals = logical True
+  ComputeNormal = Logical True
+  ComputeNormal Condition = Variable GroundedMask
+    Real MATC "tx + 0.5" 
+  Normal-Tangential Velocity = Logical True   
+  Velocity 1 = Real 0.0e0
+  Velocity 1 Condition = Variable GroundedMask
+    Real lua "tx[0] - 0.5"
+
+  Slip Coefficient 1 = Variable Coordinate 3
+    Real Procedure "ElmerIceUSF" "SeaSpring"
+  Compute Sea Spring = Logical True
+
+  Slip Coefficient 2 = Variable alpha, GroundedMask
+    REAL procedure "ElmerIceUSF" "TenPowerA_masked"
+  Slip Coefficient 3 = Variable alpha, GroundedMask
+    REAL procedure "ElmerIceUSF" "TenPowerA_masked"
+
+  External Pressure = Variable Coordinate 3
+      Real lua "sw_pressure(tx[0])"
+
+
+End
+
+Boundary Condition 4
+  Name = "upper_surface"
+  Target Boundaries(1) = 4
+  Body Id = 3
+  Depth = Real 0.0
+  Normal-Tangential Velocity = Logical True  
+End
+

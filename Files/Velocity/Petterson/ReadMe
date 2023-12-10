@@ -1,0 +1,2 @@
+SG_velo2001. asc : source file from Petterson and al.
+SG_velo2001_ESPG3006_Adjoint.asc : file for inversion in elmer (x, y, ux, uy)
