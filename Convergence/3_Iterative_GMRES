@@ -1,0 +1,331 @@
+mpprun info: Starting openmpi run on 1 node ( 20 rank X 1 th ) for job ID 25323477
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ELMER SOLVER (v 9.0) STARTED AT: 2023/04/13 11:46:59
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+MAIN: 
+MAIN: =============================================================
+MAIN: ElmerSolver finite element software, Welcome!
+MAIN: This program is free software licensed under (L)GPL
+MAIN: Copyright 1st April 1995 - , CSC - IT Center for Science Ltd.
+MAIN: Webpage http://www.csc.fi/elmer, Email elmeradm@csc.fi
+MAIN: Version: 9.0 (Rev: 935263482, Compiled: 2023-03-14)
+MAIN:  Running in parallel using 20 tasks.
+MAIN:  Running with just one thread per task.
+MAIN:  HYPRE library linked in.
+MAIN:  MUMPS library linked in.
+MAIN:  Lua interpreted linked in.
+MAIN: =============================================================
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+ParCommInit:  Initialize #PEs:           20
+LoadInputFile: Reading only "Run Control" section
+MAIN: 
+MAIN: 
+MAIN: -------------------------------------
+MAIN: Reading Model: steady_Weertman_optim.sif
+LoadInputFile: Scanning input file: steady_Weertman_optim.sif
+LoadInputFile: Scanning only size info
+LoadInputFile: First time visiting
+LoadInputFile: Reading base load of sif file
+LoadInputFile: Loading input file: steady_Weertman_optim.sif
+LoadInputFile: Reading base load of sif file
+CheckKeyword:  Unlisted keyword: [top icymask] in section: [initial condition 1]
+CheckKeyword:  Unlisted keyword: [icymask] in section: [initial condition 2]
+CheckKeyword:  Unlisted keyword: [alpha] in section: [initial condition 3]
+CheckKeyword:  Unlisted keyword: [icymask] in section: [initial condition 3]
+CheckKeyword:  Unlisted keyword: [us] in section: [body force 2]
+CheckKeyword:  Unlisted keyword: [adjoint cost] in section: [body force 2]
+CheckKeyword:  Unlisted keyword: [adjoint cost der] in section: [body force 2]
+CheckKeyword:  Unlisted keyword: [set arrhenius factor] in section: [material 1]
+CheckKeyword:  Unlisted keyword: [correct surface] in section: [solver 1]
+CheckKeyword:  Unlisted keyword: [minimum height] in section: [solver 1]
+CheckKeyword:  Unlisted keyword: [top surface variable name] in section: [solver 1]
+CheckKeyword:  Unlisted keyword: [bottom surface variable name] in section: [solver 1]
+CheckKeyword:  Unlisted keyword: [project to everywhere] in section: [solver 2]
+CheckKeyword:  Unlisted keyword: [toler] in section: [solver 3]
+CheckKeyword:  Unlisted keyword: [ice free thickness] in section: [solver 3]
+CheckKeyword:  Unlisted keyword: [remove isolated points] in section: [solver 3]
+CheckKeyword:  Unlisted keyword: [remove isolated edges] in section: [solver 3]
+CheckKeyword:  Unlisted keyword: [project to everywhere] in section: [solver 4]
+CheckKeyword:  Unlisted keyword: [stokes flow] in section: [solver 5]
+CheckKeyword:  Unlisted keyword: [cost variable name] in section: [solver 6]
+CheckKeyword:  Unlisted keyword: [cost filename] in section: [solver 6]
+CheckKeyword:  Unlisted keyword: [sensitivity variable name] in section: [solver 6]
+CheckKeyword:  Unlisted keyword: [direct solver equation name] in section: [solver 7]
+CheckKeyword:  Unlisted keyword: [adjoint solution name] in section: [solver 8]
+CheckKeyword:  Unlisted keyword: [gradient variable name] in section: [solver 8]
+CheckKeyword:  Unlisted keyword: [cost filename] in section: [solver 9]
+CheckKeyword:  Unlisted keyword: [optimized variable name] in section: [solver 9]
+CheckKeyword:  Unlisted keyword: [gradient variable name] in section: [solver 9]
+CheckKeyword:  Unlisted keyword: [cost variable name] in section: [solver 9]
+CheckKeyword:  Unlisted keyword: [lambda] in section: [solver 9]
+CheckKeyword:  Unlisted keyword: [reset cost value] in section: [solver 9]
+CheckKeyword:  Unlisted keyword: [a priori regularisation] in section: [solver 9]
+CheckKeyword:  Unlisted keyword: [cost variable name] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [optimized variable name] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [gradient variable name] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [gradient norm file] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [mesh independent] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [m1qn3 dxmin] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [m1qn3 epsg] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [m1qn3 niter] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [m1qn3 nsim] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [m1qn3 impres] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [m1qn3 dis mode] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [m1qn3 df1] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [m1qn3 normtype] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [m1qn3 outputfile] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [m1qn3 ndz] in section: [solver 10]
+CheckKeyword:  Unlisted keyword: [project to everywhere] in section: [solver 11]
+CheckKeyword:  Unlisted keyword: [maskbed] in section: [boundary condition 2]
+CheckKeyword:  Unlisted keyword: [weertman friction coefficient] in section: [boundary condition 2]
+Loading user function library: [ElmerIceUSF]...[TenPowerA]
+CheckKeyword:  Unlisted keyword: [weertman exponent] in section: [boundary condition 2]
+CheckKeyword:  Unlisted keyword: [weertman linear velocity] in section: [boundary condition 2]
+CheckKeyword:  Unlisted keyword: [slip coefficient derivative] in section: [boundary condition 2]
+Loading user function library: [ElmerIceUSF]...[TenPowerA_d]
+LoadInputFile: Number of BCs: 3
+LoadInputFile: Number of Body Forces: 2
+LoadInputFile: Number of Initial Conditions: 3
+LoadInputFile: Number of Materials: 1
+LoadInputFile: Number of Equations: 3
+LoadInputFile: Number of Solvers: 12
+LoadInputFile: Number of Bodies: 3
+ElmerAsciiMesh: Base mesh name: ../../INPUT/rectangle/.
+MAIN: -------------------------------------
+AddVtuOutputSolverHack: Adding ResultOutputSolver to write VTU output in file: RUN_Weertman_C_0.03
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: Computing matrix structure for: icymask...done.
+OptimizeBandwidth: Half bandwidth without optimization: 88
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: Computing matrix structure for: stokes-vec...done.
+OptimizeBandwidth: Half bandwidth without optimization: 177
+OptimizeBandwidth: 
+OptimizeBandwidth: Bandwidth Optimization ...done.
+OptimizeBandwidth: Half bandwidth after optimization: 172
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: Computing matrix structure for: cost...done.
+OptimizeBandwidth: Half bandwidth without optimization: 88
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: Computing matrix structure for: adjoint...done.
+OptimizeBandwidth: Half bandwidth without optimization: 177
+OptimizeBandwidth: 
+OptimizeBandwidth: Bandwidth Optimization ...done.
+OptimizeBandwidth: Half bandwidth after optimization: 172
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: Computing matrix structure for: djdbeta...done.
+OptimizeBandwidth: Half bandwidth without optimization: 88
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: ---------------------------------------------------------
+OptimizeBandwidth: Computing matrix structure for: djdbeta_reg...done.
+OptimizeBandwidth: Half bandwidth without optimization: 88
+OptimizeBandwidth: ---------------------------------------------------------
+LoadRestartFile: 
+LoadRestartFile: --------------------------------------------
+LoadRestartFile: Reading data from file: ./../../../OUTPUT/RUN_0_.result.0
+LoadRestartFile: ASCII 3
+LoadRestartFile: Reading ascii restart file version 3
+LoadRestartFile: Total number of dofs to load: 5
+LoadRestartFile: Reading time sequence:    1.000E+00
+LoadRestartFile: Reading timestep: 1
+LoadRestartFile: Time spent for restart (s):      6.8871E-02
+LoadRestartFile: All done
+LoadRestartFile: --------------------------------------------
+ElmerSolver: Number of timesteps to be saved: 1
+StructuredMeshMapper: ---------------------------------------
+StructuredMeshMapper: Performing mapping on a structured mesh
+StructuredMeshMapper: ---------------------------------------
+StructuredMeshMapper: > Correct Surface < in case of intersecting upper and lower surface
+StructuredMeshMapper:  Active coordinate mapping time:    1.5950000000000131E-003
+StructuredProjectToPlane: ------------------------------------------
+StructuredProjectToPlane: Performing projection on a structured mesh
+StructuredProjectToPlane: ------------------------------------------
+StructuredProjectToPlane:  Projection time:    4.5999999999990493E-005
+StructuredProjectToPlane: ------------------------------------------
+IcyMaskSolver: Computing a mask for the glacier extend
+IcyMaskSolver: Memory allocation done.
+IcyMaskSolver: Done
+StructuredProjectToPlane: ------------------------------------------
+StructuredProjectToPlane: Performing projection on a structured mesh
+StructuredProjectToPlane: ------------------------------------------
+StructuredProjectToPlane:  Projection time:    1.6000000000016001E-005
+StructuredProjectToPlane: ------------------------------------------
+MAIN: 
+MAIN: -------------------------------------
+MAIN:  Steady state iteration:            1
+MAIN: -------------------------------------
+MAIN: 
+IncompressibleNSSolver: --------------------------------------------------------
+IncompressibleNSSolver: Nonlinear iteration:   1
+IncompressibleNSSolver: --------------------------------------------------------
+   gmres:      10 0.6532E+02
+   gmres:      20 0.6174E+02
+   gmres:      30 0.5855E+02
+   gmres:      40 0.5838E+02
+   gmres:      50 0.5838E+02
+   gmres:      60 0.5838E+02
+   gmres:      70 0.5838E+02
+   gmres:      80 0.5838E+02
+   gmres:      90 0.5838E+02
+   gmres:     100 0.5838E+02
+   gmres:     110 0.5838E+02
+   gmres:     120 0.5838E+02
+   gmres:     130 0.5838E+02
+   gmres:     140 0.5838E+02
+   gmres:     150 0.5838E+02
+   gmres:     160 0.5838E+02
+   gmres:     170 0.5838E+02
+   gmres:     180 0.5838E+02
+   gmres:     190 0.5838E+02
+   gmres:     200 0.5838E+02
+   gmres:     210 0.5838E+02
+   gmres:     220 0.5838E+02
+   gmres:     230 0.5838E+02
+   gmres:     240 0.5838E+02
+   gmres:     250 0.5838E+02
+   gmres:     260 0.5838E+02
+   gmres:     270 0.5838E+02
+   gmres:     280 0.5838E+02
+   gmres:     290 0.5838E+02
+   gmres:     300 0.5838E+02
+   gmres:     310 0.5838E+02
+   gmres:     320 0.5838E+02
+   gmres:     330 0.5838E+02
+   gmres:     340 0.5838E+02
+   gmres:     350 0.5838E+02
+   gmres:     360 0.5838E+02
+   gmres:     370 0.5838E+02
+   gmres:     380 0.5838E+02
+   gmres:     390 0.5838E+02
+   gmres:     400 0.5838E+02
+   gmres:     410 0.5838E+02
+   gmres:     420 0.5838E+02
+   gmres:     430 0.5838E+02
+   gmres:     440 0.5838E+02
+   gmres:     450 0.5838E+02
+   gmres:     460 0.5838E+02
+   gmres:     470 0.5838E+02
+   gmres:     480 0.5838E+02
+   gmres:     490 0.5838E+02
+   gmres:     500 0.5838E+02
+   gmres:     510 0.5838E+02
+   gmres:     520 0.5838E+02
+   gmres:     530 0.5838E+02
+   gmres:     540 0.5838E+02
+   gmres:     550 0.5838E+02
+   gmres:     560 0.5838E+02
+   gmres:     570 0.5838E+02
+   gmres:     580 0.5838E+02
+   gmres:     590 0.5838E+02
+   gmres:     600 0.5838E+02
+   gmres:     610 0.5838E+02
+   gmres:     620 0.5838E+02
+   gmres:     630 0.5838E+02
+   gmres:     640 0.5838E+02
+   gmres:     650 0.5838E+02
+   gmres:     660 0.5838E+02
+   gmres:     670 0.5838E+02
+   gmres:     680 0.5838E+02
+   gmres:     690 0.5838E+02
+   gmres:     700 0.5838E+02
+   gmres:     710 0.5838E+02
+   gmres:     720 0.5838E+02
+   gmres:     730 0.5838E+02
+   gmres:     740 0.5838E+02
+   gmres:     750 0.5838E+02
+   gmres:     760 0.5838E+02
+   gmres:     770 0.5838E+02
+   gmres:     780 0.5838E+02
+   gmres:     790 0.5838E+02
+   gmres:     800 0.5838E+02
+   gmres:     810 0.5838E+02
+   gmres:     820 0.5838E+02
+   gmres:     830 0.5838E+02
+   gmres:     840 0.5838E+02
+   gmres:     850 0.5838E+02
+   gmres:     860 0.5838E+02
+   gmres:     870 0.5838E+02
+   gmres:     880 0.5838E+02
+   gmres:     890 0.5838E+02
+   gmres:     900 0.5838E+02
+   gmres:     910 0.5838E+02
+   gmres:     920 0.5838E+02
+   gmres:     930 0.5838E+02
+   gmres:     940 0.5838E+02
+   gmres:     950 0.5838E+02
+   gmres:     960 0.5838E+02
+   gmres:     970 0.5838E+02
+   gmres:     980 0.5838E+02
+   gmres:     990 0.5838E+02
+   gmres:    1000 0.5838E+02
+   gmres:    1001 0.5838E+02
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+-------------------------------------------------------
+Primary job  terminated normally, but 1 process returned
+a non-zero exit code.. Per user-direction, the job has been aborted.
+-------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun detected that one or more processes exited with non-zero status, thus causing
+the job to be terminated. The first process to do so was:
+
+  Process name: [[10799,1],3]
+  Exit code:    1
+--------------------------------------------------------------------------
+mpprun info:   Job terminated with error

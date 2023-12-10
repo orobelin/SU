@@ -1,0 +1,222 @@
+All the test are done with 100x100 elements size and C=0.03
+
+	1- classic block4_gcr preconditionner :
+
+  !linear settings:
+  Number of Integration Points = Integer 44
+  ! Iterative approach using BPC:
+  include "../../block4_gcr.sif"
+
+  !Non-linear iteration settings:
+  !------------------------------ 
+  Nonlinear System Max Iterations = 1
+  Nonlinear System Convergence Tolerance  = 1.0e-05
+
+  ! 1st iteration viscosity is constant
+  Constant-Viscosity Start = Logical True
+
+  Nonlinear Update Exported Variables = Logical True
+
+  Linear System Solver = "Block"
+  Block Gauss-Seidel = Logical True
+  Block Matrix Reuse = Logical False
+  Block Scaling = Logical False
+  Block Preconditioner = Logical True
+  Block Structure(4) = Integer 1 2 3 4
+
+
+
+! Linear system solver for outer loop
+!-----------------------------------------
+  Outer: Linear System Solver = "Iterative"
+  Outer: Linear System Iterative Method = GCR
+  Outer: Linear System GCR Restart =  250
+  Outer: Linear System Residual Output = 1
+  Outer: Linear System Max Iterations =  500
+  Outer: Linear System Abort Not Converged = False
+  Outer: Linear System Convergence Tolerance = 1e-8
+
+  $blocktol = 0.001
+
+  block 11: Linear System Convergence Tolerance = $blocktol
+  block 11: Linear System Solver = "iterative"
+  block 11: Linear System Scaling = false
+  block 11: Linear System Preconditioning = ilu
+  block 11: Linear System Residual Output = 100
+  block 11: Linear System Max Iterations = 500
+  block 11: Linear System Iterative Method = idrs
+
+  block 22: Linear System Convergence Tolerance = $blocktol
+  block 22: Linear System Solver = "iterative"
+  block 22: Linear System Scaling = false
+  block 22: Linear System Preconditioning = ilu
+  block 22: Linear System Residual Output = 100
+  block 22: Linear System Max Iterations = 500
+  block 22: Linear System Iterative Method = idrs
+
+  block 33: Linear System Convergence Tolerance = $blocktol
+  block 33: Linear System Solver = "iterative"
+  block 33: Linear System Scaling = false
+  block 33: Linear System Preconditioning = ilu
+  block 33: Linear System Residual Output = 100
+  block 33: Linear System Max Iterations = 500
+  block 33: Linear System Iterative Method = idrs
+
+  block 44: Linear System Convergence Tolerance = $blocktol
+  block 44: Linear System Solver = "iterative"
+  block 44: Linear System Scaling = true
+  block 44: Linear System Preconditioning = ilu
+  block 44: Linear System Residual Output = 100
+  block 44: Linear System Max Iterations = 500
+  block 44: Linear System Iterative Method = idrs
+
+
+
+BlockSolveInt: All done
+ComputeChange: NS (ITER=50) (NRM,RELC): (  4289.6153     0.78274138E-02 ) :: stokes-vec
+ComputeChange: SS (ITER=1) (NRM,RELC): (  4289.6153      2.0000000     ) :: stokes-vec
+
+
+
+
+	2- block4_BiCGStab preconditionner :
+
+
+  Linear System Solver = "Block"
+  Block Gauss-Seidel = Logical True
+  Block Matrix Reuse = Logical False
+  Block Scaling = Logical False
+  Block Preconditioner = Logical True
+! Default is [1 2 3 4]
+ Block Structure(4) = Integer 1 2 3 4
+!  Block Order(4) = Integer 1 2 3 4
+
+! Linear System Scaling = False
+! Linear system solver for outer loop
+!-----------------------------------------
+  Outer: Linear System Solver = "Iterative"
+  Outer: Linear System Iterative Method = GCR
+  Outer: Linear System GCR Restart =  250
+  Outer: Linear System Residual Output = 1
+  Outer: Linear System Max Iterations =  500
+  Outer: Linear System Abort Not Converged = False
+  Outer: Linear System Convergence Tolerance = 1e-8
+
+  $blocktol = 0.001
+
+  block 11: Linear System Convergence Tolerance = $blocktol
+  block 11: Linear System Solver = "iterative"
+  block 11: Linear System Iterative Method = BiCGStab
+  block 11: Linear System Max Iterations  = 1000
+  block 11: Linear System Preconditioning = ILU0
+  block 11: Linear System Convergence Tolerance = 1.0e-08
+
+  block 22: Linear System Convergence Tolerance = $blocktol
+  block 22: Linear System Solver = "iterative"
+  block 22: Linear System Iterative Method = BiCGStab
+  block 22: Linear System Max Iterations  = 1000
+  block 22: Linear System Preconditioning = ILU0
+  block 22: Linear System Convergence Tolerance = 1.0e-08
+
+  block 33: Linear System Convergence Tolerance = $blocktol
+  block 33: Linear System Solver = "iterative"
+  block 33: Linear System Iterative Method = BiCGStab
+  block 33: Linear System Max Iterations  = 1000
+  block 33: Linear System Preconditioning = ILU0
+  block 33: Linear System Convergence Tolerance = 1.0e-08
+
+  block 44: Linear System Convergence Tolerance = $blocktol
+  block 44: Linear System Solver = "iterative"
+  block 44: Linear System Iterative Method = BiCGStab
+  block 44: Linear System Max Iterations  = 1000
+  block 44: Linear System Preconditioning = ILU0
+  block 44: Linear System Convergence Tolerance = 1.0e-08
+
+
+ComputeChange: NS (ITER=49) (NRM,RELC): (  4638.2179     0.84784754E-02 ) :: stokes-vec
+
+
+
+
+	3- GMRES method :
+
+  !linear settings:
+  !------------------------------
+  Linear System Solver = Iterative
+   Linear System Iterative Method = GMRES
+   Linear System GMRES Restart = 100
+   Linear System Preconditioning= ILU0
+   Linear System Convergence Tolerance= 1.0e-08
+   Linear System Max Iterations = 1000
+
+  !Non-linear iteration settings:
+  !------------------------------ 
+  Nonlinear System Max Iterations = 50
+  Nonlinear System Convergence Tolerance  = Real 1.0e-7
+  Nonlinear System Newton After Iterations = Integer 10
+  Nonlinear System Newton After Tolerance = Real 1.0e-03
+  Nonlinear System Relaxation Factor = Real 1.0 
+
+  Nonlinear System Reset Newton = Logical True
+
+
+   gmres:    1001 0.5838E+02
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+
+
+
+
+
+	3- Iterative GCR method :
+
+  !linear iteration settings:
+  !------------------------------ 
+Linear System Solver = Iterative
+Linear System Iterative Method = "GCR"
+Linear System Max Iterations = 500
+Linear System Convergence Tolerance = 1.0E-08
+Linear System Preconditioning = "ILU1"
+Linear System Residual Output = 10
+
+  !Non-linear iteration settings:
+  !------------------------------ 
+Nonlinear System Max Iterations = 50
+Nonlinear System Convergence Tolerance = 1.0e-5
+Nonlinear System Newton After Iterations = 10
+Nonlinear System Newton After Tolerance = 1.0e-2
+Nonlinear System Consistent Norm = True
+
+  ! 1st iteration viscosity is constant
+  Constant-Viscosity Start = Logical True
+
+
+
+   gcr:   500  0.3395E+00  0.1166E-01
+ERROR:: IterSolve: Numerical Error: Too many iterations were needed.
+
+
+
+
+
+
+
+        4- Direct MUMPS method :
+
+  !------------------------------
+  Linear System Solver = Direct
+  Linear System Direct Method = MUMPS
+
+
+
+IncompressibleNSSolver: --------------------------------------------------------
+IncompressibleNSSolver: Nonlinear iteration:  15
+IncompressibleNSSolver: --------------------------------------------------------
+ComputeChange: NS (ITER=15) (NRM,RELC): (  9181.7284     0.53527755E-07 ) :: stokes-vec
+ComputeChange: SS (ITER=1) (NRM,RELC): (  9181.7284      2.0000000     ) :: stokes-vec
+
+
+
+
+
+        4- Direct MUMPS method :
+
