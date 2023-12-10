@@ -1,0 +1,70 @@
+Thickness = Surface - Bed
+
+
+09/02/2023
+Coder le fichier allsteps
+
+Surface :
+	x = 2150 ;
+	y = 1220 ;
+ESPG:3006
+
+Bed :
+	x = 430 ;
+	y = 244 ;
+ESPG : 3006
+xmin=647830.675781 xmax=652120.675781 l=4 315
+ymin=7535416.99219 ymax=7537846.99219 l=2 455
+
+Doc maillage Elmer : https://elmerice.elmerfem.org/wiki/doku.php?id=mesh:structuredmesh
+Doc maillage GMSH : https://gmsh.info/doc/texinfo/gmsh.html#Geometry-module
+
+Scattered2DDataInterpolator : transformer des données 2D en maillage
+StructuredMeshMapper : Extruder verticalement le maillage
+StructuredProjectToPlane : Faire des opérations mathématiques simples sur un maillage structuré
+
+Rendre un fichier shell exécutable : chmod u+x
+
+647830.675781 652120.675781 7535416.99219 7537846.99219
+
+MATC (minimum ice thickness) :
+! Upper Surface
+Boundary Condition 3
+  Top Surface = Variable ZsDEM, bedrockDEM
+    Real MATC "if (tx(0)>tx(1)+1.0) {tx(0)} else {tx(1)+1.0}"
+End
+
+Preconditionner : https://github.com/ElmerCSC/MLB/tree/master/linsys
+Advance docu : http://elmerice.elmerfem.org/wiki/doku.php?id=courses:csc2018
+
+
+Python : source activate myEnv
+         source deactivate
+
+Variables : 
+scalar: Icymask 
+scalar: Zs 
+scalar: Normal.vector.1 
+scalar: Normal.vector.2 
+scalar: Normal.vector.3 
+vector: Velocity
+scalar: Pressure 
+scalar: Top.velocity.1 
+scalar: Top.velocity.2 
+scalar: Top.velocity.3 
+scalar: Bottom.velocity.1 
+scalar: Bottom.velocity.2 
+scalar: Bottom.velocity.3 
+scalar: Bed 
+scalar: Surface 
+scalar: Uobs 
+scalar: Thickness 
+scalar: Depth 
+scalar: Top.icymask 
+scalar: Schur 
+scalar: Blockvar.1 
+scalar: Blockvar.2 
+scalar: Blockvar.3 
+scalar: Blockvar.4
+
+--reservation=devel <1h computation
